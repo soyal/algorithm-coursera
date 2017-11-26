@@ -1,0 +1,46 @@
+{
+  "name": "coursera-algorithm",
+  "version": "1.0.0",
+  "description": "《算法》(第四版)学习笔记",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soyal/algorithm-coursera.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soyal/algorithm-coursera/issues"
+  },
+  "homepage": "https://github.com/soyal/algorithm-coursera#readme",
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0"
+  },
+  "ava": {
+    "files": [
+      "**/*.test.js"
+    ],
+    "verbose": true,
+    "require": [
+      "babel-register"
+    ]
+  },
+  "babel": {
+    "babelrc": false,
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.10"
+          }
+        }
+      ]
+    ]
+  }
+}
