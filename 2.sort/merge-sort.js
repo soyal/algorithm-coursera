@@ -38,3 +38,18 @@ export const merge = (arr, start, mid, end) => {
 
   return arr
 }
+
+/**
+ * 自顶向下的归并排序
+ */
+export const mergeSortUB = (arr, start, end) => {
+  if(start >= end) return
+
+  const mid = parseInt((start + end) / 2, 10)
+
+  mergeSortUB(arr, start, mid)
+  mergeSortUB(arr, mid + 1, end)
+  merge(arr, start, mid, end)
+
+  return arr
+}
