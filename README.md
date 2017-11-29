@@ -8,3 +8,7 @@
 * select sort: 选择排序
 * insert sort: 插入排序
 * shell sort: 希尔排序
+
+### 归并排序
+* merge sort UB: 自顶向下的归并排序
+* merge sort BU: 自底向上的归并排序

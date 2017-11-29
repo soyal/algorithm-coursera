@@ -1,3 +1,6 @@
+/**
+ * 初级排序测试用例
+ */
 import test from 'ava'
 import { equalArray } from './common'
 import selectSort from './select-sort'

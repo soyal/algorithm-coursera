@@ -1,0 +1,40 @@
+
+/**
+ * 合并两个有序序列
+ * @param {Array} arr
+ * @param {Number} start 要排序的开始位置
+ * @param {Number} mid 划分点
+ * @param {Number} end 要排序的结束位置
+ */
+export const merge = (arr, start, mid, end) => {
+  let i = start, j = mid + 1
+  let k = 0
+  const temp = []
+
+  // 先将arr要排序的序列排好后放入temp
+  while (i <= mid && j <= end) {
+    if (arr[i] < arr[j]) {
+      temp[k++] = arr[i++]
+    } else {
+      temp[k++] = arr[j++]
+    }
+  }
+
+  if (i > mid) {
+    while (j <= end) {
+      temp[k++] = arr[j++]
+    }
+  }
+
+  if (j > end) {
+    while (i <= mid) {
+      temp[k++] = arr[i++]
+    }
+  }
+  // 然后再将排好序的temp 回倒进arr里面
+  for (let i = 0; i < k; i++) {
+    arr[start + i] = temp[i]
+  }
+
+  return arr
+}
