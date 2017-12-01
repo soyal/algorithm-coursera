@@ -41,9 +41,10 @@ export const merge = (arr, start, mid, end) => {
 
 /**
  * 自顶向下的归并排序
+ * 归(递归)并(合并)
  */
 export const mergeSortUB = (arr, start, end) => {
-  if(start >= end) return
+  if (start >= end) return
 
   const mid = parseInt((start + end) / 2, 10)
 
@@ -53,3 +54,25 @@ export const mergeSortUB = (arr, start, end) => {
 
   return arr
 }
+
+
+/**
+ * 自底向上的归并排序
+ * @param {*} arr 
+ */
+export const mergeSortBU = (arr) => {
+  const length = arr.length
+  
+// console.log('....before: ', arr)
+  // 就是依次 一一合并 二二合并 四四合并...
+  for (let size = 1; size < length; size *= 2) {
+    for (let start = 0; start < length - size; start += (2 * size)) {
+      const mid = start + size - 1
+      const end = Math.min(start + 2 * size - 1, length - 1)
+      merge(arr, start, mid, end)
+    }
+    // console.log(`....size: ${size}`, arr)
+  }
+
+  return arr
+} 
