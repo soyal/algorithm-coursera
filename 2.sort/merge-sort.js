@@ -42,6 +42,7 @@ export const merge = (arr, start, mid, end) => {
 /**
  * 自顶向下的归并排序
  * 归(递归)并(合并)
+ * 将宏观数组拆分成递归拆分数组
  */
 export const mergeSortUB = (arr, start, end) => {
   if (start >= end) return
@@ -58,11 +59,12 @@ export const mergeSortUB = (arr, start, end) => {
 
 /**
  * 自底向上的归并排序
+ * 从11数组排序，然后22数组排序，44数组排序
  * @param {*} arr 
  */
 export const mergeSortBU = (arr) => {
   const length = arr.length
-  
+
 // console.log('....before: ', arr)
   // 就是依次 一一合并 二二合并 四四合并...
   for (let size = 1; size < length; size *= 2) {
