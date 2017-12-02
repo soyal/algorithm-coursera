@@ -12,3 +12,6 @@
 ### 归并排序
 * merge sort UB: 自顶向下的归并排序
 * merge sort BU: 自底向上的归并排序
+
+### 快速排序
+* quick sort base: 基础的快速排序
