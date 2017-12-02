@@ -20,24 +20,20 @@ export const quickSortBase = (arr, start, end) => {
 }
 
 export const _sort = (arr, start, end) => {
-  let i = start + 1, j = end
+  let i = start, j = end + 1
   const flag = arr[start]
 
-  while (true) {
+  while (i < j) {
     // 分别移动i,j,左侧找到比flag大的元素，右侧找到比flag小的元素，然后将它们交换
-    while (arr[i] < flag) {
-      if(i >= j) {
+    while (arr[++i] < flag) {
+      if (i > end) {
         break
-      } else {
-        i ++
       }
     }
 
-    while (arr[j] > flag) {
-      if( j <= i) {
+    while (arr[--j] > flag) {
+      if (j < start) {
         break
-      } else {
-        j--
       }
     }
 
@@ -49,4 +45,50 @@ export const _sort = (arr, start, end) => {
   exchange(arr, start, j)
 
   return j
+}
+
+
+/**
+ * 网上比较常见的快速排序
+ * 俗称挖坑法
+ */
+export const quickSortNormal = (arr, start, end) => {
+  if (start >= end) return
+
+  // 先挖start位置
+  let i = start, j = end
+  let flag = arr[i]
+
+  while (i < j) {
+    // 从右侧数过来的value都比挖出来的value大
+    while (arr[j] >= flag && j > i) {
+      j--
+    }
+
+    if (i === j) break
+
+    // 当前arr[j] < temp,将其挖出来填到i指向的空位上
+    arr[i] = arr[j]
+    i++
+
+    // 从左侧往右侧数的value都小于flag的情况
+    while (arr[i] <= flag && i < j) {
+      i++
+    }
+
+    if (i === j) break
+
+    // arr[i] > flag
+    arr[j] = arr[i]
+    j--
+  }
+
+  arr[j] = flag
+
+  // 递归排序左侧
+  quickSortNormal(arr, start, j - 1)
+  // 递归排序右侧
+  quickSortNormal(arr, j + 1, end)
+
+  return arr
 }
