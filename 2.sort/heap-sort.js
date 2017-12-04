@@ -34,6 +34,7 @@ export const sort = (arr, N) => {
     sink(arr, k, N)
   }
 
+  // 移除最大值，将最大值和末尾的子元素交换，然后沉降子元素
   while(N >= 1) {
     exchange(arr, 1, N--)
     sink(arr, 1, N)
