@@ -17,8 +17,9 @@
   },
   "homepage": "https://github.com/soyal/algorithm-coursera#readme",
   "devDependencies": {
-    "ava": "^0.23.0",
+    "ava": "^0.24.0",
     "babel-eslint": "^8.0.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "eslint": "^4.12.1",
@@ -46,7 +47,12 @@
       ]
     ],
     "plugins": [
-      ["transform-class-properties", { "spec": true }]
+      [
+        "transform-class-properties",
+        {
+          "spec": true
+        }
+      ]
     ]
   }
 }
