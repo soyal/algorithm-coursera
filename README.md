@@ -21,3 +21,9 @@
 
 * heap priority queue: 基于堆的优先队列实现
 * heap sort: 堆排序
+
+## 3.search 查找
+
+### 符号表
+* sequence search: 线性查找(略)
+* binary search: 二分查找
