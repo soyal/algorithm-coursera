@@ -111,6 +111,30 @@ class BST {
       return _r
     }
   }
+
+  /**
+   * 返回键大于等于key的节点中最小的节点
+   * @param {Number} key 
+   * @return {Node}
+   */
+  ceil(key) {
+    return this._ceil(this.root, key)
+  }
+
+  _ceil(node, key) {
+    if(node === null) return null
+
+    if(key === node.key) {
+      return node
+    } else if(key > node.key) {
+      return this._ceil(node.right, key)
+    } else {
+      const _l = this._ceil(node.left, key)
+      if(_l === null) return node
+
+      return _l
+    }
+  }
 }
 
 export default BST

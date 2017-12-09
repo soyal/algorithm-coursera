@@ -46,3 +46,18 @@ test('BST floor', t => {
   const floor1 = bst.floor(5)
   t.is(floor1.key, 3)
 })
+
+test('BST ceil', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  const _c1 = bst.ceil(5)
+  t.is(_c1.key, 6)
+
+  const _c2 = bst.ceil(3)
+  t.is(_c2.key, 3)
+})
