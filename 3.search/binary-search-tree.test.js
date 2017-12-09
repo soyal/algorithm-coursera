@@ -22,3 +22,27 @@ test('BST get', t => {
   t.is(bst.get(2), 22)
   t.is(bst.get(4), null)
 })
+
+test('BST min', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(0, 44)
+
+  const min = bst.min()
+  t.is(min.value, 44)
+})
+
+test('BST floor', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(0, 44)
+
+  const floor1 = bst.floor(5)
+  t.is(floor1.key, 3)
+})

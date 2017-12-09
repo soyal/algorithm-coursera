@@ -55,14 +55,14 @@ class BST {
   }
 
   _put(node, key, value) {
-    if(node === null) {
+    if (node === null) {
       return new Node(key, value, 1)
     }
 
     // 相等就更新
-    if(node.key === key) {
+    if (node.key === key) {
       node.value = value
-    } else if(key < node.key) {
+    } else if (key < node.key) {
       node.left = this._put(node.left, key, value)
     } else {
       node.right = this._put(node.right, key, value)
@@ -72,6 +72,44 @@ class BST {
     node.N = this._size(node.left) + this._size(node.right) + 1
 
     return node
+  }
+
+  /**
+   * 返回最小节点
+   * @return {Node}
+   */
+  min() {
+    return this._min(this.root)
+  }
+
+  _min(node) {
+    if (node === null) return null
+    if (node.left === null) return node
+    return this._min(node.left)
+  }
+
+  /**
+   * 返回小于等于key的节点中最大的节点
+   * @param {Number} key 
+   * @return {Node}
+   */
+  floor(key) {
+    return this._floor(this.root, key)
+  }
+
+  _floor(node, key) {
+    if (node === null) return null
+
+    if (node.key === key) {
+      return node
+    } else if (key < node.key) {
+      return this._floor(node.left, key)
+    } else {
+      const _r = this._floor(node.right, key)
+      if(_r === null) return node
+
+      return _r
+    }
   }
 }
 
