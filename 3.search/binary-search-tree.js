@@ -75,11 +75,11 @@ class BST {
   }
 
   /**
-   * 返回最小节点
-   * @return {Node}
+   * 返回最小节点的key
+   * @return {Number}
    */
   min() {
-    return this._min(this.root)
+    return this._min(this.root).key
   }
 
   _min(node) {
@@ -89,12 +89,12 @@ class BST {
   }
 
   /**
-   * 返回小于等于key的节点中最大的节点
+   * 返回小于等于key的节点中最大的节点的key
    * @param {Number} key 
-   * @return {Node}
+   * @return {Number}
    */
   floor(key) {
-    return this._floor(this.root, key)
+    return this._floor(this.root, key).key
   }
 
   _floor(node, key) {
@@ -113,12 +113,12 @@ class BST {
   }
 
   /**
-   * 返回键大于等于key的节点中最小的节点
+   * 返回键大于等于key的节点中最小的节点的key
    * @param {Number} key 
-   * @return {Node}
+   * @return {Number}
    */
   ceil(key) {
-    return this._ceil(this.root, key)
+    return this._ceil(this.root, key).key
   }
 
   _ceil(node, key) {
@@ -133,6 +133,49 @@ class BST {
       if(_l === null) return node
 
       return _l
+    }
+  }
+
+  /**
+   * 返回小于排名为n(有n个节点的key比其小)的节点的key
+   * @param {Number} n
+   */
+  select(n) {
+    const target = this._select(this.root, n)
+    return target && target.key
+  }
+
+  _select(node, n) {
+    if(node === null) return null
+
+    const _leftSize = this._size(node.left)
+    if(n === _leftSize) {
+      return node
+    } else if(n < _leftSize) {
+      return this._select(node.left, n)
+    } else {
+      return this._select(node.right, n - _leftSize - 1)
+    }
+  }
+
+  /**
+   * 返回指定键的排名
+   * @param {Number} key 
+   * @return {Number}
+   */
+  rank(key) {
+    return this._rank(this.root, key)
+  }
+
+  _rank(node, key) {
+    if(node === null) return 0
+
+    if(key === node.key) {
+      return this._size(node.left)
+    } else if(key < node.key) {
+      return this._rank(node.left, key)
+    } else {
+      return this._size(node.left) + 1 + this._rank(node.right, key)
     }
   }
 }

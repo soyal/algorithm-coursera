@@ -32,7 +32,7 @@ test('BST min', t => {
   bst.put(0, 44)
 
   const min = bst.min()
-  t.is(min.value, 44)
+  t.is(min, 0)
 })
 
 test('BST floor', t => {
@@ -44,7 +44,7 @@ test('BST floor', t => {
   bst.put(0, 44)
 
   const floor1 = bst.floor(5)
-  t.is(floor1.key, 3)
+  t.is(floor1, 3)
 })
 
 test('BST ceil', t => {
@@ -56,8 +56,35 @@ test('BST ceil', t => {
   bst.put(6, 66)
 
   const _c1 = bst.ceil(5)
-  t.is(_c1.key, 6)
+  t.is(_c1, 6)
 
   const _c2 = bst.ceil(3)
-  t.is(_c2.key, 3)
+  t.is(_c2, 3)
+})
+
+test('BST select', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  t.is(bst.select(2), 3)
+  t.is(bst.select(3), 6)
+  t.is(bst.select(4), null)
+})
+
+test('BST rank', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  t.is(bst.rank(1), 0)
+  t.is(bst.rank(3), 2)
+  t.is(bst.rank(5), 3)
+  t.is(bst.rank(99), 4)
 })
