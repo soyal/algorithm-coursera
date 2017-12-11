@@ -88,3 +88,38 @@ test('BST rank', t => {
   t.is(bst.rank(5), 3)
   t.is(bst.rank(99), 4)
 })
+
+test('BST delMin', t => {
+  const bst = new BST()
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  t.is(bst.min(), 1)
+
+  bst.delMin()
+  t.is(bst.min(), 2)
+  t.is(bst.size(), 3)
+
+  bst.delMin()
+  t.is(bst.min(), 3)
+  t.is(bst.size(), 2)
+})
+
+test('BST del', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  t.is(bst.get(1), 11)
+  t.is(bst.size(), 4)
+  
+  bst.del(1)
+
+  t.is(bst.get(1), null)
+  t.is(bst.size(), 3)
+})

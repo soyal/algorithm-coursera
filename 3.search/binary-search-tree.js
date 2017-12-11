@@ -106,7 +106,7 @@ class BST {
       return this._floor(node.left, key)
     } else {
       const _r = this._floor(node.right, key)
-      if(_r === null) return node
+      if (_r === null) return node
 
       return _r
     }
@@ -122,15 +122,15 @@ class BST {
   }
 
   _ceil(node, key) {
-    if(node === null) return null
+    if (node === null) return null
 
-    if(key === node.key) {
+    if (key === node.key) {
       return node
-    } else if(key > node.key) {
+    } else if (key > node.key) {
       return this._ceil(node.right, key)
     } else {
       const _l = this._ceil(node.left, key)
-      if(_l === null) return node
+      if (_l === null) return node
 
       return _l
     }
@@ -146,12 +146,12 @@ class BST {
   }
 
   _select(node, n) {
-    if(node === null) return null
+    if (node === null) return null
 
     const _leftSize = this._size(node.left)
-    if(n === _leftSize) {
+    if (n === _leftSize) {
       return node
-    } else if(n < _leftSize) {
+    } else if (n < _leftSize) {
       return this._select(node.left, n)
     } else {
       return this._select(node.right, n - _leftSize - 1)
@@ -168,15 +168,84 @@ class BST {
   }
 
   _rank(node, key) {
-    if(node === null) return 0
+    if (node === null) return 0
 
-    if(key === node.key) {
+    if (key === node.key) {
       return this._size(node.left)
-    } else if(key < node.key) {
+    } else if (key < node.key) {
       return this._rank(node.left, key)
     } else {
       return this._size(node.left) + 1 + this._rank(node.right, key)
     }
+  }
+
+  /**
+   * 删除BST中key最小的节点
+   */
+  delMin() {
+    this.root = this._delMin(this.root)
+  }
+
+  /**
+   * 删除以node为根节点的树的最小节点
+   * @param {Node} node 
+   * @return {Node} 删除最小节点后树的根节点
+   */
+  _delMin(node) {
+    if (node === null) return null
+
+    if (node.left === null) {
+      const _r = node.right
+      node = null
+      return _r
+    } else {
+      node.left = this._delMin(node.left)
+      node.N = node.N - 1
+      return node
+    }
+  }
+
+  /**
+   * 删除指定的key
+   * @param {Number} key 
+   */
+  del(key) {
+    this.root = this._del(this.root, key)
+  }
+
+  /**
+   * 
+   * @param {Node} node 
+   * @param {Number} key 
+   * @return {Node} 删除key后的树的根节点
+   */
+  _del(node, key) {
+    if (node === null) return null
+
+    //整体思路是，删除节点，拿右侧树的最小节点来补
+    if (key < node.key) {
+      node.left = this._del(node.left, key)
+    } else if (key > node.key) {
+      node.right = this._del(node.right, key)
+      // 相等的情况
+    } else {
+      if (node.left === null) return node.right
+      if (node.right === null) return node.left
+
+      const t = node
+      // 右侧最小节点
+      const _rightMin = this._min(t.right)
+      this._delMin(t.right)
+
+      _rightMin.left = t.left
+      _rightMin.right = t.right
+      node = _rightMin
+
+    }
+
+    node.N = node.N - 1
+
+    return node
   }
 }
 
