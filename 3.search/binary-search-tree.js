@@ -247,6 +247,43 @@ class BST {
 
     return node
   }
+
+  /**
+   * 范围查找操作
+   * @param {Number} start 起始key
+   * @param {Number} end  结束key
+   * @return {Array} 查找到的Key的结合
+   */
+  keys(start, end) {
+    const queue = []
+    this._keys(this.root, queue, start, end)
+
+    return queue
+  }
+
+  /**
+   * 
+   * @param {Number} node 查找的目标节点
+   * @param {Array} queue 
+   * @param {Number} start 
+   * @param {Number} end 
+   */
+  _keys(node, queue, start, end) {
+    if(node === null) return null
+
+    if(node.key > start) {
+      this._keys(node.left, queue, start, end)
+    }
+
+    // 在范围内
+    if(node.key >= start && node.key <= end) {
+      queue.push(node.key)
+    }
+
+    if(node.key < end) {
+      this._keys(node.right, queue, start, end)
+    }
+  }
 }
 
 export default BST

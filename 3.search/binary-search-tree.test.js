@@ -1,5 +1,6 @@
 import test from 'ava'
 import BST from './binary-search-tree'
+import { equalArray } from '../2.sort/common'
 
 test('BST size', t => {
   const bst = new BST()
@@ -117,9 +118,24 @@ test('BST del', t => {
 
   t.is(bst.get(1), 11)
   t.is(bst.size(), 4)
-  
+
   bst.del(1)
 
   t.is(bst.get(1), null)
   t.is(bst.size(), 3)
+})
+
+test('BST keys', t => {
+  const bst = new BST()
+
+  bst.put(2, 22)
+  bst.put(1, 11)
+  bst.put(3, 33)
+  bst.put(6, 66)
+
+  const q1 = bst.keys(1, 3)
+  t.true(equalArray(q1, [1, 2, 3]))
+
+  const q2 = bst.keys(2, 10)
+  t.true(equalArray(q2, [2, 3, 6]))
 })
