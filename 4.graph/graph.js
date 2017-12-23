@@ -15,12 +15,16 @@ export class Graph {
     }
   }
 
-  V() {
+  getV() {
     return this.V
   }
 
-  E() {
+  getE() {
     return this.E
+  }
+
+  getAdj(v) {
+    return this.adj[v]
   }
 
   addEdge(v, w) {
@@ -36,8 +40,8 @@ export class Graph {
  * 深度优先搜索
  */
 export class DepthFirstSearch {
-  marked = []  // 用于判断与其他节点是否连通的数组
-  count = 0  // 与该节点连通的所有的节点的数量
+  _marked = []  // 用于判断与其他节点是否连通的数组
+  _count = 0  // 与该节点连通的所有的节点的数量
 
   /**
    * 
@@ -45,7 +49,7 @@ export class DepthFirstSearch {
    * @param {Number} s 起始节点
    */
   constructor(G, s) {
-    this.marked = new Array(G.V())
+    this._marked = (new Array(G.getV())).fill(false)
     this.dfs(G, s)
   }
 
@@ -55,24 +59,31 @@ export class DepthFirstSearch {
    * @param {Number} v 搜索的目标节点
    */
   dfs(G, v) {
-    this.marked[v] = true
-    this.count ++ 
+    this._marked[v] = true
+    this._count ++ 
 
     // 获取所有相邻的节点
-    const adjs = G.adj(v)
+    const adjs = G.getAdj(v)
 
     adjs.forEach((node) => {
-      if(!this.marked[node]) {
+      if(!this._marked[node]) {
         this.dfs(G, node)
       }
     })
   }
 
+  /**
+   * source节点是否与v节点连通
+   * @param {Number} v 
+   */
   marked(v) {
-    return this.marked[v]
+    return this._marked[v]
   }
 
+  /**
+   * 与source节点连通的总数
+   */
   count() {
-    return this.count
+    return this._count
   }
 }
