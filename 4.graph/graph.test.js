@@ -1,5 +1,9 @@
 import test from 'ava'
-import { DepthFirstSearch, Graph } from './graph'
+import { 
+  DepthFirstSearch, 
+  DepthFirstPaths,
+  Graph
+} from './graph'
 
 /**
  * 生成一幅无向图
@@ -27,7 +31,7 @@ function _geGraph() {
   return graph
 }
 
-test('DeepFirstSearch', t => {
+test('DepthFirstSearch', t => {
   const graph = _geGraph()
   const dst = new DepthFirstSearch(graph, 0)
 
@@ -39,4 +43,16 @@ test('DeepFirstSearch', t => {
 
   // count 测试
   t.is(dst.count(), 7)
+})
+
+test('DepthFirstPaths', t => {
+  const graph = _geGraph()
+  const dfps = new DepthFirstPaths(graph, 0)
+
+  // hasPathTo
+  t.true(dfps.hasPathTo(1))
+  // pathTo
+  t.is(dfps.pathTo(1).join('-'), '1-0')
+  t.is(dfps.pathTo(3).join('-'), '3-5-0')
+  t.is(dfps.pathTo(4).join('-'), '4-3-5-0')
 })

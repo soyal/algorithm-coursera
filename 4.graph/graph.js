@@ -42,6 +42,7 @@ export class Graph {
 export class DepthFirstSearch {
   _marked = []  // 用于判断与其他节点是否连通的数组
   _count = 0  // 与该节点连通的所有的节点的数量
+  _s = -1  // 源节点
 
   /**
    * 
@@ -50,6 +51,7 @@ export class DepthFirstSearch {
    */
   constructor(G, s) {
     this._marked = (new Array(G.getV())).fill(false)
+    this._s = s
     this.dfs(G, s)
   }
 
@@ -60,13 +62,13 @@ export class DepthFirstSearch {
    */
   dfs(G, v) {
     this._marked[v] = true
-    this._count ++ 
+    this._count++
 
     // 获取所有相邻的节点
     const adjs = G.getAdj(v)
 
     adjs.forEach((node) => {
-      if(!this._marked[node]) {
+      if (!this._marked[node]) {
         this.dfs(G, node)
       }
     })
@@ -86,4 +88,71 @@ export class DepthFirstSearch {
   count() {
     return this._count
   }
+}
+
+
+/**
+ * 深度优先路径
+ */
+export class DepthFirstPaths {
+  _marked = []  // 记录源节点到对应的节点是否连通
+  _s = -1  // 源节点
+  _edgeTo = [] // 记录到每个节点的上一个节点
+
+  /**
+   * 
+   * @param {Graph} G 图
+   * @param {Number} s 源节点
+   */
+  constructor(G, s) {
+    this._marked = new Array(G.getV()).fill(false)
+    this._edgeTo = new Array(G.getV()).fill(-1)
+    this._s = s
+
+    this.dsf(G, s)
+  }
+
+  /**
+   * 源节点与v节点是否有连通路径
+   */
+  hasPathTo(v) {
+    return this._marked[v]
+  }
+
+  /**
+   * 获取源节点与v的连通路径
+   * @param {*} v 
+   */
+  pathTo(v) {
+    if (!this.hasPathTo(v)) return null
+
+    const paths = []
+
+    for (let x = v; x !== this._s; x = this._edgeTo[x]) {
+      paths.push(x)
+    }
+
+    paths.push(this._s)
+
+    return paths
+  }
+
+  /**
+   * 深度优先搜索
+   * @param {Graph} G 
+   * @param {Number} v 搜索起点
+   */
+  dsf(G, v) {
+    this._marked[v] = true
+
+    const adj = G.getAdj(v)  // 获取相邻节点集合
+
+    adj.forEach((node) => {
+      if (!this._marked[node]) {
+        this._edgeTo[node] = v
+        this.dsf(G, node)
+      }
+    })
+  }
+
 }
