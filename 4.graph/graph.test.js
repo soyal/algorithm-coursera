@@ -2,6 +2,7 @@ import test from 'ava'
 import { 
   DepthFirstSearch, 
   DepthFirstPaths,
+  BreadthFirstPaths,
   Graph
 } from './graph'
 
@@ -55,4 +56,16 @@ test('DepthFirstPaths', t => {
   t.is(dfps.pathTo(1).join('-'), '1-0')
   t.is(dfps.pathTo(3).join('-'), '3-5-0')
   t.is(dfps.pathTo(4).join('-'), '4-3-5-0')
+})
+
+test('BreadthFirstPaths', t => {
+  const graph = _geGraph()
+  const bfsp = new BreadthFirstPaths(graph, 0)
+
+  // hasPathTo
+  t.true(bfsp.hasPathTo(1))
+  // pathTo
+  t.is(bfsp.pathTo(1).join('-'), '1-0')
+  t.is(bfsp.pathTo(3).join('-'), '3-5-0')
+  t.is(bfsp.pathTo(4).join('-'), '4-5-0')
 })

@@ -42,4 +42,4 @@
 ### Graph 无向图
 * Graph 无向图类
 * DepthFirstSearch 深度优先连通性搜索
-* DepthFirstPaths 深度优先路径搜索
+* DepthFirstPaths 深度优先路径搜索，搜索出来的路径为最短路径
