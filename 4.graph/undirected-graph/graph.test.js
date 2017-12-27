@@ -1,10 +1,11 @@
 import test from 'ava'
-import { 
-  DepthFirstSearch, 
+import {
+  DepthFirstSearch,
   DepthFirstPaths,
   BreadthFirstPaths,
   Graph
 } from './graph'
+import CC from './cc'
 
 /**
  * 生成一幅无向图
@@ -22,7 +23,7 @@ function _geGraph() {
   graph.addEdge(3, 4)
   graph.addEdge(4, 6)
 
-  graph.addEdge(7,8)
+  graph.addEdge(7, 8)
 
   graph.addEdge(9, 10)
   graph.addEdge(9, 11)
@@ -68,4 +69,16 @@ test('BreadthFirstPaths', t => {
   t.is(bfsp.pathTo(1).join('-'), '1-0')
   t.is(bfsp.pathTo(3).join('-'), '3-5-0')
   t.is(bfsp.pathTo(4).join('-'), '4-5-0')
+})
+
+test('CC', t => {
+  const graph = _geGraph()
+  const cc = new CC(graph)
+
+  t.true(cc.connected(0, 1))
+  t.true(cc.connected(0, 2))
+  t.true(cc.connected(5, 4))
+
+  t.false(cc.connected(0, 7))
+  t.false(cc.connected(8, 9))
 })
