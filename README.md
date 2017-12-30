@@ -44,3 +44,5 @@
 * DepthFirstSearch 深度优先连通性搜索
 * DepthFirstPaths 深度优先路径搜索，搜索出来的路径为最短路径
 * CC 使用深度优先搜索查询连通分量(v与w是否连通)
+* Cycle 检测图是否含有环
+* TwoColor 双色问题，能否用两种颜色将一幅图的所有顶点着色(检测二分图)
