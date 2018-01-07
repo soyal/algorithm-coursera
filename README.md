@@ -50,3 +50,6 @@
 
 ### Digraph 有向图
 * Digraph 有向图类
+* DirectedCycle 检测有向图是否含环
+* DirectedDFS 有向图深度优先搜索
+* DepthFirstOrder 基于深度优先搜索的顶点排序
