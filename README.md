@@ -56,3 +56,7 @@
 * KosarajuSCC 使用kosaraju算法，计算有向图的强连通分量
 
 ### UWGraph 加权无向图
+
+* EWGraph 加权无向图类
+* Edge 加权边类
+* LazyPrimMST 延时Prim算法实现
