@@ -20,7 +20,7 @@ export default class IndexMinPQ {
   insert(k, item) {
     this._pq[k] = item
     this._length++
-
+    
     if(this._minIndex === -1 || this._pq[this._minIndex] > item) {
       this._minIndex = k
     }
@@ -32,6 +32,8 @@ export default class IndexMinPQ {
    * @param {Number} item value
    */
   change(k, item) {
+    if(k >= this._maxLength) return
+
     if (!this.contains(k)) {
       this._length++
     }

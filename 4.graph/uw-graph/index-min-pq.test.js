@@ -25,3 +25,37 @@ test('index min pq', t => {
   pq.change(5, -10)
   t.is(pq.minIndex(), 5)
 })
+
+test('del min', t => {
+  const pq = new IndexMinPQ(10)
+
+  pq.insert(1, 2)
+  pq.insert(2, 3)
+  pq.insert(3, 4)
+  pq.insert(4, 8)
+  pq.insert(6, 9)
+  t.is(pq.delMin(), 1)
+  t.is(pq.delMin(), 2)
+  t.is(pq.delMin(), 3)
+  t.is(pq.delMin(), 4)
+  t.is(pq.delMin(), 6)
+  t.is(pq.size(), 0)
+  t.true(pq.isEmpty())
+  t.is(pq.delMin(), -1)
+})
+
+test('change', t => {
+  const pq = new IndexMinPQ(10)
+
+  pq.insert(1, 2)
+  pq.insert(2, 3)
+  pq.insert(3, 4)
+  pq.insert(4, 8)
+  pq.insert(6, 9)
+  t.is(pq.size(), 5)
+  t.is(pq.minIndex(), 1)
+
+  pq.change(1,10)
+  t.is(pq.size(), 5)
+  t.is(pq.minIndex(), 2)
+})
