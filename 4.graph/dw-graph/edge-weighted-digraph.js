@@ -10,7 +10,7 @@ export default class EdgeWeightedDigraph {
    */
   constructor(V) {
     this._V = V
-    this._adj = new Array(V).map(() => {
+    this._adj = [...Array(V)].map(() => {
       return []
     })
   }
