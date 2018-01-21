@@ -66,3 +66,4 @@
 ### DWGraph 加权有向图(解决最短路径问题)
 * DWGraph 加权有向图类
 * dijkstra 计算s到所有节点的最短路径
+* acyclic dijkstra优化版，先进行拓扑排序，然后按照排序顺序进行顶点放松
