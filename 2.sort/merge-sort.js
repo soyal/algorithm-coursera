@@ -1,4 +1,3 @@
-
 /**
  * 合并两个有序序列
  * @param {Array} arr
@@ -7,7 +6,8 @@
  * @param {Number} end 要排序的结束位置
  */
 export const merge = (arr, start, mid, end) => {
-  let i = start, j = mid + 1
+  let i = start,
+    j = mid + 1
   let k = 0
   const temp = []
 
@@ -56,19 +56,18 @@ export const mergeSortUB = (arr, start, end) => {
   return arr
 }
 
-
 /**
  * 自底向上的归并排序
  * 从11数组排序，然后22数组排序，44数组排序
- * @param {*} arr 
+ * @param {*} arr
  */
-export const mergeSortBU = (arr) => {
+export const mergeSortBU = arr => {
   const length = arr.length
 
-// console.log('....before: ', arr)
+  // console.log('....before: ', arr)
   // 就是依次 一一合并 二二合并 四四合并...
   for (let size = 1; size < length; size *= 2) {
-    for (let start = 0; start < length - size; start += (2 * size)) {
+    for (let start = 0; start < length - size; start += 2 * size) {
       const mid = start + size - 1
       const end = Math.min(start + 2 * size - 1, length - 1)
       merge(arr, start, mid, end)
@@ -77,4 +76,4 @@ export const mergeSortBU = (arr) => {
   }
 
   return arr
-} 
+}

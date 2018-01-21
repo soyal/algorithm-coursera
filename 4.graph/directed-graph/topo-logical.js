@@ -9,8 +9,7 @@ export default class Topological {
 
   constructor(G) {
     const cycle = new DirectedCycle(G)
-
-    if(!cycle.hasCycle()) {
+    if(!cycle.hasCycle()) {  
       const dfo = new DepthFirstOrder(G)
       this._order = dfo.reversePost()
     }
