@@ -60,4 +60,38 @@ export default class TrieST {
     node.next[keyCode] = this._put(node.next[keyCode], key, value, d + 1)
     return node
   }
+
+  /**
+   * 获取单词查找树中的所有单词
+   */
+  keys() {
+    return this.keysWithPrefix('')
+  }
+
+  /**
+   * 查找以pre开头的所有单词
+   * @param {String} pre
+   * @return {Array<String>}
+   */
+  keysWithPrefix(pre) {
+    const queue = []
+    this._collect(this._get(this.root, pre, 0), pre, queue)
+    return queue
+  }
+
+  /**
+   * 查找以node为根节点，前缀是pre的有val的所有单词，将其放进queue中
+   * @param {*} node
+   * @param {*} pre
+   * @param {*} queue
+   */
+  _collect(node, pre, queue) {
+    if (node === null) return null
+
+    if (node.val !== null) queue.push(pre)
+
+    for (let r = 0; r < R; r++) {
+      this._collect(node.next[r], pre + String.fromCharCode(r), queue)
+    }
+  }
 }
