@@ -32,3 +32,12 @@ test('keysWithPrefix', t=> {
   t.is(st.keysWithPrefix('she').length, 2)
   t.is(st.keysWithPrefix('the').length, 1)
 })
+
+test('keysThatMatch', t=> {
+  const st = gst()
+
+  t.is(st.keysThatMatch('by').length, 1)
+  t.is(st.keysThatMatch('abc').length, 0)
+  t.is(st.keysThatMatch('s..').length, 2)
+  t.is(st.keysThatMatch('.he').length, 2)
+})

@@ -80,6 +80,18 @@ export default class TrieST {
   }
 
   /**
+   * 通配符匹配
+   * @param {String} pattern 通配符 e.g .he可以匹配 she che the
+   */
+  keysThatMatch(pattern) {
+    const queue = []
+
+    this._collect2(this.root, '', pattern, queue)
+
+    return queue
+  }
+
+  /**
    * 查找以node为根节点，前缀是pre的有val的所有单词，将其放进queue中
    * @param {*} node
    * @param {*} pre
@@ -92,6 +104,37 @@ export default class TrieST {
 
     for (let r = 0; r < R; r++) {
       this._collect(node.next[r], pre + String.fromCharCode(r), queue)
+    }
+  }
+
+  /**
+   * 用于keysThatMatch
+   * @param {*} node
+   * @param {*} pre
+   * @param {*} pattern
+   * @param {*} queue
+   */
+  _collect2(node, pre, pattern, queue) {
+    if (node === null) return
+
+    const d = pre.length
+
+    if (d === pattern.length && node.val !== null) {
+      queue.push(pre)
+    }
+    if (d === pattern.length) return
+
+    const pat = pattern.charAt(d)
+    for (let c = 0; c < R; c++) {
+      const nextChar = String.fromCharCode(c)
+      if (pat === '.' || pat === nextChar) {
+        this._collect2(
+          node.next[c],
+          pre + nextChar,
+          pattern,
+          queue
+        )
+      }
     }
   }
 }
