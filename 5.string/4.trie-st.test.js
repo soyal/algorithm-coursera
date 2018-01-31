@@ -41,3 +41,11 @@ test('keysThatMatch', t=> {
   t.is(st.keysThatMatch('s..').length, 2)
   t.is(st.keysThatMatch('.he').length, 2)
 })
+
+test('longestPrefixOf', t => {
+  const st = gst()
+
+  t.is(st.longestPrefixOf('shellsaaa'), 'shells')
+  t.is(st.longestPrefixOf('season'), 'sea')
+  t.is(st.longestPrefixOf('aaaaaaaa'), '')
+})

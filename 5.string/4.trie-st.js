@@ -128,13 +128,37 @@ export default class TrieST {
     for (let c = 0; c < R; c++) {
       const nextChar = String.fromCharCode(c)
       if (pat === '.' || pat === nextChar) {
-        this._collect2(
-          node.next[c],
-          pre + nextChar,
-          pattern,
-          queue
-        )
+        this._collect2(node.next[c], pre + nextChar, pattern, queue)
       }
     }
+  }
+
+  /**
+   * 查找str的最长前缀, e.g str=shells 返回shell
+   * @param {String} str
+   * @return {String}
+   */
+  longestPrefixOf(str) {
+    const length = this._search(this.root, str, 0, 0)
+    return str.substring(0, length)
+  }
+
+  /**
+   *
+   * @param {*} node
+   * @param {*} str
+   * @param {*} d
+   * @param {*} length
+   * @return {Number} prefix长度
+   */
+  _search(node, str, d, length) {
+    if (node === null) return length
+
+    if (node.val !== null) length = d
+
+    if (d === str.length) return length
+
+    const nextChar = str.charCodeAt(d)
+    return this._search(node.next[nextChar], str, d + 1, length)
   }
 }
