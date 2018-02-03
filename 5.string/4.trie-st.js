@@ -161,4 +161,42 @@ export default class TrieST {
     const nextChar = str.charCodeAt(d)
     return this._search(node.next[nextChar], str, d + 1, length)
   }
+
+  /**
+   * 删除str这个单词
+   * @param {String} str
+   */
+  delete(str) {
+    this.root = this._delete(this.root, str, 0)
+  }
+
+  /**
+   * 递归的删除操作
+   * @param {Node} node
+   * @param {String} str
+   * @param {Number} d
+   * @return {Node}
+   */
+  _delete(node, str, d) {
+    if (node === null) return null
+
+    const length = str.length
+
+    if (length === d) {
+      node.val = null
+    } else {
+      const charCode = str.charCodeAt(d)
+      node.next[charCode] = this._delete(node.next[charCode], str, d + 1)
+    }
+
+    // node并不是此次删除的目标
+    if (node.val !== null) return node
+
+    // 要么本身没值,要么就是此次删除的目标,对其孩子进行遍历，如果都为null,删除自身，否则不删除
+    for (let r = 0; r < R; r++) {
+      if (node.next[r] !== null) return node
+    }
+
+    return null
+  }
 }

@@ -49,3 +49,14 @@ test('longestPrefixOf', t => {
   t.is(st.longestPrefixOf('season'), 'sea')
   t.is(st.longestPrefixOf('aaaaaaaa'), '')
 })
+
+test('delete', t => {
+  const st = gst()
+
+  t.is(st.keys().length, 7)
+  st.delete('she')
+  t.is(st.keys().length, 6)
+
+  st.delete('aaa')
+  t.is(st.keys().length, 6)
+})
