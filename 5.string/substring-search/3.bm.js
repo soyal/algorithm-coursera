@@ -29,26 +29,44 @@ function getBc(pat) {
  * 假设有字符串ACABAB
  * 则其suff为 [0, 0, 0, 2, 0, 6]
  */
-function suffixes(pat) {
-  const suff = new Array.fill(0)
+export function suffixes(pat) {
   const len = pat.length
+  const suff = new Array(len).fill(0)
 
-  for (let i = len - 1; i >= 0; i++) {
+  for (let i = len - 1; i >= 0; i--) {
     let j = i
 
     // 要对比的两位的差是m-1-i
-    while (j >= 0 && pat.chatAt(j) === pat.charAt(j + len - 1 - i)) {
+    while (j >= 0 && pat.charAt(j) === pat.charAt(j + len - 1 - i)) {
       j--
     }
 
     suff[i] = i - j
   }
+
+  return suff
 }
 
 /**
  * 获取好后缀表
  * @param {String} pat 
+ * @return {Array} gs 好后缀表
+ * gs 将记录pat各个位置的元素匹配失败后,将移动的距离
+ * e.g: gs[3] = 5，表示第3位匹配失败,pat将向前移动5位
  */
-function getGs(pat) {
-  // const 
+export function getGs(pat) {
+  const len = pat.length
+  const suff = suffixes(pat)
+  const gs = new Array(len).fill(len)
+  gs[len - 1] = len
+
+  for(let k = len - 2;k>=0;k++) {
+    // 完全匹配
+    if(suff[k] === len -1 -k) {
+      gs[k] = len -1 -k
+      // 部分匹配
+    } else if(suff[k] === k + 1) {
+      gs[k] = len - 1 - k
+    } 
+  }
 }
