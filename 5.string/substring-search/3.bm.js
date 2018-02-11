@@ -6,18 +6,17 @@ const MAX_SIZE = 256
 /**
  * 获取坏字符表
  * @return {Array} bc
- * bc记录的是256个字符在pat中最后出现的位置(倒着数的)
+ * bc记录的是256个字符在pat中最后出现的位置(倒着数的)，如果存在重复，则以最右侧为准
  * 比如bc['a']=1表示a最后出现在倒数第二位，如果该字符不存在pat中，则记为pat.length
  */
-function getBc(pat) {
+export function getBc(pat) {
   const len = pat.length
-  const bc = new Array(MAX_SIZE).fill(len)
+  const bc = new Array(MAX_SIZE).fill(-1)
 
   for (let i = 0; i < len; i++) {
     // i + 倒数的位数 = len - 1
-    bc[pat.charCodeAt(i)] = len - 1 - i
+    bc[pat.charCodeAt(i)] = i
   }
-
   return bc
 }
 
@@ -49,9 +48,9 @@ export function suffixes(pat) {
 
 /**
  * 获取好后缀表
- * @param {String} pat 
+ * @param {String} pat
  * @return {Array} gs 好后缀表
- * gs 将记录pat各个位置的元素匹配失败后,将移动的距离
+ * gs 将记录pat各个位置的元素匹配失败后,将向右移动的距离
  * e.g: gs[3] = 5，表示第3位匹配失败,pat将向前移动5位
  */
 export function getGs(pat) {
@@ -60,13 +59,66 @@ export function getGs(pat) {
   const gs = new Array(len).fill(len)
   gs[len - 1] = len
 
-  for(let k = len - 2;k>=0;k++) {
-    // 完全匹配
-    if(suff[k] === len -1 -k) {
-      gs[k] = len -1 -k
-      // 部分匹配
-    } else if(suff[k] === k + 1) {
-      gs[k] = len - 1 - k
-    } 
+  // k为错误匹配位置,[k + 1, len - 1]则为要查找的后缀
+  // 这段距离为 len - 1 - k - 1 + 1 = len - 1 - k
+  for (let k = 0; k < len - 1; k++) {
+    for (let i = len - 2; i >= 0; i--) {
+      // 完全匹配 || 部分匹配
+      if (
+        suff[i] === len - 1 - k ||
+        (suff[i] === i + 1 && i + 1 <= len - 1 - k)
+      ) {
+        gs[k] = len - 1 - i
+        continue
+      }
+    }
   }
+
+  return gs
+}
+
+/**
+ * bm匹配子字符串算法
+ * @param {*} txt
+ * @param {*} pat
+ */
+export default function bm(txt, pat) {
+  const bc = getBc(pat)
+  const gs = getGs(pat)
+  const txtLen = txt.length
+  const patLen = pat.length
+
+  // i 指向txt, j指向pat
+  let i = 0,
+    j = patLen - 1
+
+  while (i + j < txtLen) {
+    const targetChar = txt.charAt(i + j)
+    const patChar = pat.charAt(j)
+
+    // 匹配到
+    if (targetChar === patChar) {
+      j--
+      if(j === -1) break
+      // 未匹配到
+    } else {
+      const bcNth = bc[targetChar.charCodeAt(0)] 
+      const bcShift = bcNth === -1 ? patLen: j - bcNth
+      const gsShift = gs[j]
+
+      let shift 
+      if(gsShift === patLen) {
+        shift = bcShift
+      } else {
+        shift = Math.max(gsShift, bcShift)
+      }
+      
+      i += shift
+      j = patLen - 1
+    }
+  }
+
+  if (j === -1) return i
+
+  return -1
 }
